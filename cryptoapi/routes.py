@@ -10,11 +10,12 @@ def build_url(view_url):
     view_url = view_url.replace('dev/', '')
     return '{0}{1}'.format(app.config['ROOT_URL'], view_url)
 
+
 # Build crypto data dict with detail url
 def single_crypto_response(crypto):
-        res = crypto.root_to_dict()
-        res['_detail'] = build_url(url_for('get_crypto', id=crypto.id))
-        return res
+    res = crypto.root_to_dict()
+    res['_detail'] = build_url(url_for('get_crypto', id=crypto.id))
+    return res
 
 
 @app.route('/')
@@ -68,14 +69,15 @@ def index():
         }
     })
 
+
 @app.route('/cryptos', methods=['GET'])
 def get_cryptos():
     page = request.args.get('page', 1, type=int)
     cryptos = Crypto.query
-    
+
     if 'filter' in request.args:
         filter = request.args.get('filter', '', type=str)
-        cryptos=Crypto.query.filter(
+        cryptos = Crypto.query.filter(
             Crypto.name.ilike(r"%{}%".format(filter)),
             Crypto.slug.ilike(r"%{}%".format(filter))
         )
@@ -94,6 +96,7 @@ def get_cryptos():
             single_crypto_response(crypto) for crypto in cryptos.items
         ]
     })
+
 
 @app.route('/cryptos/<id>', methods=['GET'])
 def get_crypto(id):
@@ -123,6 +126,7 @@ def get_crypto(id):
         res['data'] = crypto.to_dict()
         return jsonify(res)
 
+
 @app.route('/cryptos/<id>/tokens', methods=['GET'])
 def get_tokens(id):
     platform = Crypto.query.filter_by(id=id).first_or_404()
@@ -133,6 +137,7 @@ def get_tokens(id):
             single_crypto_response(crypto) for crypto in token_list
         ]
     })
+
 
 @app.route('/categories', methods=['GET'])
 def get_categories():
@@ -160,5 +165,4 @@ def get_categories():
                 'total': len(queryset),
                 'list': [single_crypto_response(crypto) for crypto in queryset]
             }
-    
     return jsonify(res)

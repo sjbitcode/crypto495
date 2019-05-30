@@ -1,4 +1,4 @@
-from cryptoapi import app, db
+from cryptoapi import db
 
 
 class Crypto(db.Model):
@@ -15,7 +15,7 @@ class Crypto(db.Model):
 
     def __str__(self):
         return f'({self.symbol}) - {self.name}'
-    
+
     def to_dict(self):
         return {
             'id': self.id,

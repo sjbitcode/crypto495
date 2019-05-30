@@ -31,3 +31,4 @@ tmp/
 venv/
 node_modules/
 cryptoapi/cryptodb.db
+notes.txt
