@@ -11,7 +11,7 @@ Get list of supported cryptos.
 Get details of crypto by a given id.
 
 ---
-#### `/cryptos/{id}/tokens`
+#### `/cryptos/{id}/tokens` GET
 Get all cryptos that are tokens of a single crypto by a given id.
 
 ---
